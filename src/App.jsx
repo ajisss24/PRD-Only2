@@ -100,16 +100,16 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F3F7] text-[#212121] flex flex-col items-center">
+    <div className={`min-h-screen ${mode === 'wireframe' ? 'bg-gray-200' : 'bg-[#F0F3F7]'} text-[#212121] flex flex-col items-center transition-colors duration-200`}>
       {/* Top Banner Control Panel (Alur Prototipe & Verifikasi Worksheet 12) */}
-      <header className="w-full bg-[#038848] text-white py-2 px-4 shadow-md sticky top-0 z-50">
+      <header className={`w-full ${mode === 'wireframe' ? 'bg-gray-900 border-b border-gray-700' : 'bg-[#038848]'} text-white py-2 px-4 shadow-md sticky top-0 z-50 transition-colors duration-200`}>
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-xs md:text-sm">
           <div className="flex items-center gap-2">
             <span className="bg-white/20 px-2 py-0.5 rounded font-bold uppercase tracking-wider">
-              Eksperimen A: PRD Only
+              {mode === 'wireframe' ? 'Mode Wireframe' : 'Eksperimen A: PRD Only'}
             </span>
             <span className="font-semibold hidden sm:inline">
-              Worksheet 12 UX – Fitur Ulasan Relevan Tokopedia
+              {mode === 'wireframe' ? 'Blueprint Struktur & Tata Letak Low-Fidelity' : 'Worksheet 12 UX – Fitur Ulasan Relevan Tokopedia'}
             </span>
           </div>
 
@@ -120,7 +120,7 @@ export default function App() {
               onClick={() => navigateTo('pdp', 'Semua', false, false)}
               className={`px-2.5 py-1 rounded-full text-xs font-medium transition ${
                 currentScreen === 'pdp'
-                  ? 'bg-white text-[#038848] font-bold shadow'
+                  ? 'bg-white text-gray-900 font-bold shadow'
                   : 'bg-white/10 hover:bg-white/20 text-white'
               }`}
             >
@@ -130,7 +130,7 @@ export default function App() {
               onClick={() => navigateTo('reviews_summary', 'Semua', false, false)}
               className={`px-2.5 py-1 rounded-full text-xs font-medium transition ${
                 currentScreen === 'reviews_summary'
-                  ? 'bg-white text-[#038848] font-bold shadow'
+                  ? 'bg-white text-gray-900 font-bold shadow'
                   : 'bg-white/10 hover:bg-white/20 text-white'
               }`}
             >
@@ -140,7 +140,7 @@ export default function App() {
               onClick={() => navigateTo('aspect_filter', 'Kualitas', false, false)}
               className={`px-2.5 py-1 rounded-full text-xs font-medium transition ${
                 currentScreen === 'aspect_filter'
-                  ? 'bg-white text-[#038848] font-bold shadow'
+                  ? 'bg-white text-gray-900 font-bold shadow'
                   : 'bg-white/10 hover:bg-white/20 text-white'
               }`}
             >
@@ -150,7 +150,7 @@ export default function App() {
               onClick={() => navigateTo('photo_filter', 'Semua', true, false)}
               className={`px-2.5 py-1 rounded-full text-xs font-medium transition ${
                 currentScreen === 'photo_filter'
-                  ? 'bg-white text-[#038848] font-bold shadow'
+                  ? 'bg-white text-gray-900 font-bold shadow'
                   : 'bg-white/10 hover:bg-white/20 text-white'
               }`}
             >
@@ -160,7 +160,7 @@ export default function App() {
               onClick={() => navigateTo('complaints_empty', 'Semua', false, false)}
               className={`px-2.5 py-1 rounded-full text-xs font-medium transition ${
                 currentScreen === 'complaints_empty'
-                  ? 'bg-white text-[#038848] font-bold shadow'
+                  ? 'bg-white text-gray-900 font-bold shadow'
                   : 'bg-white/10 hover:bg-white/20 text-white'
               }`}
             >
@@ -169,27 +169,27 @@ export default function App() {
           </div>
 
           {/* Mode Switcher: Hi-Fi Prototype vs Lo-Fi Wireframe */}
-          <div className="flex items-center gap-1 bg-black/25 p-0.5 rounded-lg border border-white/20">
+          <div className="flex items-center gap-1 bg-black/30 p-0.5 rounded-lg border border-white/20">
             <button
               onClick={() => setMode('prototype')}
-              className={`px-2 py-1 rounded text-xs font-bold transition flex items-center gap-1 ${
+              className={`px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1 ${
                 mode === 'prototype'
                   ? 'bg-white text-[#038848] shadow-sm'
                   : 'text-white/80 hover:text-white'
               }`}
             >
-              <span>✨ Prototipe</span>
+              <span>✨ Prototipe Hi-Fi</span>
             </button>
             <button
               onClick={() => setMode('wireframe')}
-              className={`px-2 py-1 rounded text-xs font-bold transition flex items-center gap-1 ${
+              className={`px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1 ${
                 mode === 'wireframe'
-                  ? 'bg-amber-300 text-gray-900 shadow-sm'
+                  ? 'bg-white text-gray-900 shadow-sm'
                   : 'text-white/80 hover:text-white'
               }`}
-              title="Tampilkan Wireframe Struktural Low-Fidelity"
+              title="Tampilkan Wireframe Hitam Putih / Grayscale"
             >
-              <span>📐 Wireframe</span>
+              <span>📐 Wireframe Lo-Fi (B&W)</span>
             </button>
           </div>
 
@@ -225,7 +225,21 @@ export default function App() {
               ? 'w-full max-w-[430px] rounded-[36px] border-[8px] border-gray-800 min-h-[844px]'
               : 'w-full max-w-4xl rounded-2xl border border-gray-200 min-h-[800px]'
           }`}
+          style={
+            mode === 'wireframe'
+              ? {
+                  filter: 'grayscale(100%) contrast(110%)',
+                  WebkitFilter: 'grayscale(100%) contrast(110%)'
+                }
+              : {}
+          }
         >
+          {/* Wireframe Banner on Top of Device */}
+          {mode === 'wireframe' && (
+            <div className="bg-gray-900 text-white text-[10px] font-mono py-1 px-3 text-center uppercase tracking-widest border-b border-gray-700 flex items-center justify-center gap-2 select-none">
+              <span>📐 LOW-FIDELITY WIREFRAME (GRAYSCALE STRUKTUR & INFORMASI)</span>
+            </div>
+          )}
           {/* Tokopedia Mobile App Bar Header */}
           <div className="bg-[#00AA5B] text-white px-4 py-3 flex items-center justify-between gap-3 sticky top-0 z-40">
             {currentScreen !== 'pdp' ? (
