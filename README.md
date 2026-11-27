@@ -16,7 +16,9 @@ Fitur **Ulasan Relevan** dirancang untuk mempermudah calon pembeli Tokopedia dal
 ---
 
 ## 📱 Alur Interaksi & Keterhubungan Layar (Minimal 5 Layar/State)
-Prototipe ini menyediakan minimal 5 tampilan/layar interaktif yang saling terhubung dalam satu user flow terpadu:
+Prototipe ini menyediakan minimal 5 tampilan/layar interaktif yang saling terhubung dalam satu user flow terpadu. Aplikasi juga dilengkapi dengan toggle **Mode Wireframe (Lo-Fi)** dan **Mode Prototipe (Hi-Fi)**:
+
+> **Dokumentasi Struktur & Blueprint Wireframe:** Silakan baca file [WIREFRAME.md](./WIREFRAME.md) untuk melihat spesifikasi struktur informasi per layar secara detail.
 
 1. **Layar 1 – Product Detail Page (PDP) Tokopedia**
    - Header aplikasi e-commerce Tokopedia (Search, Cart, Notifikasi, Info Lokasi).

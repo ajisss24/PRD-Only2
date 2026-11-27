@@ -44,6 +44,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('ulasan'); // 'ulasan' | 'ringkasan' | 'keluhan'
   const [showEmptySimulation, setShowEmptySimulation] = useState(false);
   const [viewMode, setViewMode] = useState('mobile'); // 'mobile' | 'desktop'
+  const [mode, setMode] = useState('prototype'); // 'prototype' | 'wireframe'
   const [helpfulCounts, setHelpfulCounts] = useState(
     reviewsList.reduce((acc, r) => ({ ...acc, [r.id]: r.likes }), {})
   );
@@ -167,6 +168,31 @@ export default function App() {
             </button>
           </div>
 
+          {/* Mode Switcher: Hi-Fi Prototype vs Lo-Fi Wireframe */}
+          <div className="flex items-center gap-1 bg-black/25 p-0.5 rounded-lg border border-white/20">
+            <button
+              onClick={() => setMode('prototype')}
+              className={`px-2 py-1 rounded text-xs font-bold transition flex items-center gap-1 ${
+                mode === 'prototype'
+                  ? 'bg-white text-[#038848] shadow-sm'
+                  : 'text-white/80 hover:text-white'
+              }`}
+            >
+              <span>✨ Prototipe</span>
+            </button>
+            <button
+              onClick={() => setMode('wireframe')}
+              className={`px-2 py-1 rounded text-xs font-bold transition flex items-center gap-1 ${
+                mode === 'wireframe'
+                  ? 'bg-amber-300 text-gray-900 shadow-sm'
+                  : 'text-white/80 hover:text-white'
+              }`}
+              title="Tampilkan Wireframe Struktural Low-Fidelity"
+            >
+              <span>📐 Wireframe</span>
+            </button>
+          </div>
+
           {/* Device Viewport Toggle (NFR-03 & AC-10) */}
           <div className="flex items-center gap-1 bg-black/20 p-0.5 rounded-lg">
             <button
@@ -260,11 +286,19 @@ export default function App() {
               <div className="pb-24">
                 {/* Product Images Showcase */}
                 <div className="relative bg-gray-100 aspect-square sm:aspect-[4/3] flex items-center justify-center overflow-hidden">
-                  <img
-                    src={productData.images[0]}
-                    alt={productData.name}
-                    className="w-full h-full object-cover"
-                  />
+                  {mode === 'wireframe' ? (
+                    <div className="w-full h-full bg-gray-100 border-2 border-dashed border-gray-400 flex flex-col items-center justify-center text-gray-600 font-mono p-4 text-center select-none">
+                      <div className="w-16 h-16 border-2 border-gray-400 flex items-center justify-center text-xl font-bold mb-2">✕</div>
+                      <span className="font-bold text-xs">[ WIREFRAME: FOTO PRODUK UTAMA ]</span>
+                      <span className="text-[10px] text-gray-500 mt-0.5">Dimensi 1:1 Aspect Ratio • Placeholder</span>
+                    </div>
+                  ) : (
+                    <img
+                      src={productData.images[0]}
+                      alt={productData.name}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                   <div className="absolute bottom-3 right-3 bg-black/60 text-white text-[11px] px-2.5 py-1 rounded-full">
                     1 / {productData.images.length} Foto
                   </div>
@@ -869,11 +903,17 @@ export default function App() {
                         {/* Reviewer Header */}
                         <div className="flex items-start justify-between gap-2 mb-2">
                           <div className="flex items-center gap-2">
-                            <img
-                              src={rev.userAvatar}
-                              alt={rev.userName}
-                              className="w-8 h-8 rounded-full object-cover border border-gray-200"
-                            />
+                            {mode === 'wireframe' ? (
+                              <div className="w-8 h-8 rounded-full bg-gray-200 border border-gray-400 flex items-center justify-center text-[10px] font-mono text-gray-700 font-bold shrink-0">
+                                USR
+                              </div>
+                            ) : (
+                              <img
+                                src={rev.userAvatar}
+                                alt={rev.userName}
+                                className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                              />
+                            )}
                             <div>
                               <div className="flex items-center gap-1.5">
                                 <span className="text-xs font-bold text-gray-900">
@@ -939,11 +979,18 @@ export default function App() {
                                   }
                                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-gray-200 cursor-pointer relative group"
                                 >
-                                  <img
-                                    src={photoUrl}
-                                    alt="Foto ulasan"
-                                    className="w-full h-full object-cover group-hover:scale-105 transition"
-                                  />
+                                  {mode === 'wireframe' ? (
+                                    <div className="w-full h-full bg-gray-100 border border-dashed border-gray-400 flex flex-col items-center justify-center text-[10px] font-mono text-gray-600">
+                                      <span className="text-xs">✕</span>
+                                      <span>Foto {pIdx + 1}</span>
+                                    </div>
+                                  ) : (
+                                    <img
+                                      src={photoUrl}
+                                      alt="Foto ulasan"
+                                      className="w-full h-full object-cover group-hover:scale-105 transition"
+                                    />
+                                  )}
                                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white">
                                     <ExternalLink className="w-4 h-4" />
                                   </div>
